@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const userModel = require('../models/userModel');
 const productController = require('../controllers/productController');
+const homepageController = require('../controllers/homepageController');
 
 const corsOptions = {
   origin: "*", //process.env.ORIGIN
@@ -11,7 +12,7 @@ const corsOptions = {
 }
 
 /* GET home page. */
-router.get('/', cors(corsOptions), productController.displayProductList);
+router.get('/', cors(corsOptions), homepageController.displayHomepage);
 
 router.get('/demo', function(req, res, next) {
   res.json({message: "Hello ReactJS"})
