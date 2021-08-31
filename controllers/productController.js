@@ -3,21 +3,22 @@ const productModel = require('../models/productModel');
 
 exports.displayCactusList = async (req, res, next) => {
     const page = req.query.page == undefined ? 1 : parseInt(req.query.page);
+    const filter = await productService.handleQuery({...req.query});
     let paginationInfo = {};
     let productList;
 
     switch (req.params.id) {
         case "large-cactus":
-            paginationInfo = await productService.handlePagination(/,Cactus,LargeCactus,/, page);
-            productList = await productService.getProductList(/,Cactus,LargeCactus,/, page);
+            paginationInfo = await productService.handlePagination(/,Cactus,LargeCactus,/, page, filter);
+            productList = await productService.getProductList(/,Cactus,LargeCactus,/, page, filter);
             break;
         case "medium-cactus":
-            paginationInfo = await productService.handlePagination(/,Cactus,MediumCactus,/, page);
-            productList = await productService.getProductList(/,Cactus,MediumCactus,/, page);
+            paginationInfo = await productService.handlePagination(/,Cactus,MediumCactus,/, page, filter);
+            productList = await productService.getProductList(/,Cactus,MediumCactus,/, page, filter);
             break;
         case "small-cactus":
-            paginationInfo = await productService.handlePagination(/,Cactus,SmallCactus,/, page);
-            productList = await productService.getProductList(/,Cactus,SmallCactus,/, page);
+            paginationInfo = await productService.handlePagination(/,Cactus,SmallCactus,/, page, filter);
+            productList = await productService.getProductList(/,Cactus,SmallCactus,/, page, filter);
             break;
         case "mix-cactus":
             paginationInfo = await productService.handlePagination(/,Cactus,MixCactus,/, page);
@@ -37,8 +38,9 @@ exports.displayCactusList = async (req, res, next) => {
 
 exports.displayAllCactus = async (req, res, next) => {
     const page = req.query.page == undefined ? 1 : parseInt(req.query.page);
-    const paginationInfo =  await productService.handlePagination(/,Cactus,/, page);
-    const productList = await productService.getProductList(/,Cactus,/, page);
+    const filter = await productService.handleQuery(req.query);
+    const paginationInfo =  await productService.handlePagination(/,Cactus,/, page, filter);
+    const productList = await productService.getProductList(/,Cactus,/, page, filter);
 
     res.send({
         productList: productList, 
