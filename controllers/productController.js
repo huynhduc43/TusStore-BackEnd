@@ -3,6 +3,7 @@ const productModel = require('../models/productModel');
 
 exports.displayCactusList = async (req, res, next) => {
     const page = req.query.page == undefined ? 1 : parseInt(req.query.page);
+    const sort = req.query.sort === undefined ? 'newst' : req.query.sort;
     const filter = await productService.handleQuery({...req.query});
     let paginationInfo = {};
     let productList;
@@ -10,19 +11,19 @@ exports.displayCactusList = async (req, res, next) => {
     switch (req.params.id) {
         case "large-cactus":
             paginationInfo = await productService.handlePagination(/,Cactus,LargeCactus,/, page, filter);
-            productList = await productService.getProductList(/,Cactus,LargeCactus,/, page, filter);
+            productList = await productService.getProductList(/,Cactus,LargeCactus,/, page, filter, sort);
             break;
         case "medium-cactus":
             paginationInfo = await productService.handlePagination(/,Cactus,MediumCactus,/, page, filter);
-            productList = await productService.getProductList(/,Cactus,MediumCactus,/, page, filter);
+            productList = await productService.getProductList(/,Cactus,MediumCactus,/, page, filter, sort);
             break;
         case "small-cactus":
             paginationInfo = await productService.handlePagination(/,Cactus,SmallCactus,/, page, filter);
-            productList = await productService.getProductList(/,Cactus,SmallCactus,/, page, filter);
+            productList = await productService.getProductList(/,Cactus,SmallCactus,/, page, filter, sort);
             break;
         case "mix-cactus":
             paginationInfo = await productService.handlePagination(/,Cactus,MixCactus,/, page);
-            productList = await productService.getProductList(/,Cactus,MixCactus,/, page);
+            productList = await productService.getProductList(/,Cactus,MixCactus,/, page, sort);
             break;
         default:
             const product = await productModel.findById(req.params.id);
@@ -37,10 +38,11 @@ exports.displayCactusList = async (req, res, next) => {
 }
 
 exports.displayAllCactus = async (req, res, next) => {
-    const page = req.query.page == undefined ? 1 : parseInt(req.query.page);
-    const filter = await productService.handleQuery(req.query);
+    const page = req.query.page === undefined ? 1 : parseInt(req.query.page);
+    const sort = req.query.sort === undefined ? 'newst' : req.query.sort;
+    const filter = await productService.handleQuery({...req.query});
     const paginationInfo =  await productService.handlePagination(/,Cactus,/, page, filter);
-    const productList = await productService.getProductList(/,Cactus,/, page, filter);
+    const productList = await productService.getProductList(/,Cactus,/, page, filter, sort);
 
     res.send({
         productList: productList, 
