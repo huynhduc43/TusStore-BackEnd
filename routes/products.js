@@ -40,4 +40,6 @@ router.get('/pots/:id', cors(corsOptions), productController.displayPotsList);
 
 router.get('/pots', cors(corsOptions), productController.displayAllPots);
 
+router.get('/:id', cors(corsOptions), productController.viewProductDetail);
+
 module.exports = router;
