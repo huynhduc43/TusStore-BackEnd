@@ -6,6 +6,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var db = require('./config/database');
+const cors = require('cors');
+const corsOptions = {
+    origin: "*", //process.env.ORIGIN
+    optionsSuccessStatus: 200,
+}
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -20,12 +25,15 @@ app.set('view engine', 'jade');
 
 db();
 
+
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.options('*', cors(corsOptions));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
