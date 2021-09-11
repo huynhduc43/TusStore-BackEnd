@@ -16,9 +16,10 @@ exports.checkSignInInfo = async (req, res, next) => {
         });
     } else {
         let checkPassword = await bcrypt.compare(req.body.password, user.password);
+        
         if (checkPassword) {
             res.json({
-                email: req.body.email,
+                user: user,
                 isLogged: true,
                 url: ''
             });

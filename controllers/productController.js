@@ -1,5 +1,6 @@
 const productService = require('../services/productService');
 const productModel = require('../models/productModel');
+const commentModel = require('../models/commentModel');
 
 exports.displayCactusList = async (req, res, next) => {
     const page = req.query.page == undefined ? 1 : parseInt(req.query.page);
@@ -144,5 +145,7 @@ exports.displayHotProducts = async(req, res, next) => {
 
 exports.viewProductDetail = async (req, res, next) => {
     const product = await productModel.findById(req.params.id);
+    //Get comment
+    const comments = await commentModel.find({productId: req.params.id});
     res.send(product);
 }
