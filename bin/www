@@ -22,11 +22,46 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
+//Socket.io
+const options = {
+  cors: {
+    origin: "*",
+  }
+};
+
+const io = require("socket.io")(server, {
+  cors: {
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST"],
+  }
+});
+
+io.on("connection", socket => {
+  console.log("socket.id: " + socket.id);
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+
+  //socket.broadcast.emit("comment", "world");
+
+  socket.on('comment', (msg) => {
+    socket.broadcast.emit('cmt-broadcast', `server: ${msg}`);
+  });
+
+  socket.on('send-comment', (msg) => {
+    socket.broadcast.emit('cmt-broadcast', `user comment: ${msg}`);
+  });
+});
+
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+server.listen(port, () => {
+  console.log('listening on *:3001');
+});
+
 server.on('error', onError);
 server.on('listening', onListening);
 

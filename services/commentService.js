@@ -18,9 +18,9 @@ exports.postComment = async (body) => {
         postDate: body.postDate,
     }
 
-    const newComment = commentModel(data)
-    const a = await newComment.save();
-    console.log(a);
+    const newComment = commentModel(data);
+    const cmt = await newComment.save();
+    return cmt._id;
 }
 
 exports.handlePaginationCmt = async (productId, page) => {
@@ -51,14 +51,15 @@ exports.handleLike = async (commentId, userId) => {
 
     if (user) {
         const index = comment.like.indexOf(userId);
-        console.log(index)
+    
         if (index === -1) {
             await commentModel.findByIdAndUpdate(commentId, {like: [...comment.like, userId]});
+            return String(comment.like.length + 1);
         } else {
            const tmp = [...comment.like];
            tmp.splice(index, 1);
            await commentModel.findByIdAndUpdate(commentId, {like: tmp});
+           return String(comment.like.length - 1);
         }
     }
-
 }

@@ -1,7 +1,8 @@
 const commentService = require('../services/commentService');
 
 exports.postComment = async (req, res, next) => {
-    await commentService.postComment(req.body);
+    const commentId = await commentService.postComment(req.body);
+    res.send(commentId);
 }
 
 exports.getComment = async (req, res, next) => {
@@ -11,7 +12,7 @@ exports.getComment = async (req, res, next) => {
     res.send(obj);
 }
 
-exports.likeComment = async (req) => {
-    //.log(req.body);
-    await commentService.handleLike(req.body.commentId, req.body.userId);
+exports.likeComment = async (req, res) => {
+    const like = await commentService.handleLike(req.body.commentId, req.body.userId);
+    res.send(like);
 }
