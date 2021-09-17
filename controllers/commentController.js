@@ -11,7 +11,7 @@ exports.getComment = async (req, res, next) => {
 
     res.send(obj);
 }
-
+ 
 exports.likeComment = async (req, res) => {
     const like = await commentService.handleLike(req.body.commentId, req.body.userId);
     res.send(like);

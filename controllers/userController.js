@@ -1,9 +1,8 @@
 const userService = require('../services/userService');
-const PER_PAGE = 10;//Limit
-const LENGTH = 5;
 
 exports.handleSignIn = async (req, res, next) => {
-    await userService.checkSignInInfo(req, res, next);
+    const obj = await userService.checkSignInInfo(req, res, next);
+    res.send(obj);
 }
 
 exports.signUp = async (req, res, next) => {

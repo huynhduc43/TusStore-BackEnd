@@ -7,31 +7,33 @@ const userModel = require('../models/userModel');
 
 exports.checkSignInInfo = async (req, res, next) => {
     const user = await userModel.findOne({ email: req.body.email }).exec();
+    let obj;
 
     if (user === null) {
-        res.json({
+        obj = {
             email: req.body.email,
             isLogged: false,
             errMsg: "Email không tồn tại",
-        });
+        };
     } else {
         let checkPassword = await bcrypt.compare(req.body.password, user.password);
         
         if (checkPassword) {
-            res.json({
+            obj = {
                 user: user,
                 isLogged: true,
                 url: ''
-            });
+            };
         } else {
-            res.json({
+            obj = {
                 email: req.body.email,
                 isLogged: false,
                 errMsg: "Sai mật khẩu",
-            });
+            };
         }
     }
 
+    return obj;
 }
 
 exports.handleSignUp = async (data, res) => {

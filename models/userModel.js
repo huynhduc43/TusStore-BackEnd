@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
     //orders: {type: mongoose.Schema.Types.ObjectId, require: true},
     //wishlist: {type: mongoose.Schema.Types.ObjectId, require: true},
     //notificationList: {type: mongoose.Schema.Types.ObjectId, require: true},
+    cart: Array,
     role: { type: String, require: true, default: "user" }, // user | admin | superadmin
     isLocked: {type: Boolean, require: true, default: false}
 });

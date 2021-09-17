@@ -23,7 +23,8 @@ router.post('/sign-up', cors(corsOptions), userController.signUp);
 
 router.post('/sign-in', cors(corsOptions), userController.handleSignIn);
 
-/* GET home page. */
-router.get('/', cors(corsOptions), homepageController.displayHomepage);
+router.get('/hot-products', cors(corsOptions), homepageController.displayHotProducts);
+
+router.get('/newest-products', cors(corsOptions), homepageController.displayNewestProducts);
 
 module.exports = router;
