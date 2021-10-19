@@ -1,30 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const cors = require('cors');
 
-const userModel = require('../models/userModel');
-const productController = require('../controllers/productController');
-const homepageController = require('../controllers/homepageController');
-const userController = require('../controllers/userController');
-const commentController = require('../controllers/commentController');
+const userController = require('../components/users/userController');
+const commentController = require('../components/comments/commentController');
+const productsController = require('../components/products/productController');
 
-const corsOptions = {
-  origin: "*", //process.env.ORIGIN
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+router.put('/comments/:id', commentController.likeComment);
 
-router.put('/comments/:id', cors(corsOptions), commentController.likeComment);
+router.get('/comments/:id', commentController.getComment);
 
-router.get('/comments/:id', cors(corsOptions), commentController.getComment);
+router.post('/comments', commentController.postComment);
 
-router.post('/comments', cors(corsOptions), commentController.postComment);
+router.post('/sign-up', userController.signUp);
 
-router.post('/sign-up', cors(corsOptions), userController.signUp);
+router.post('/sign-in', userController.handleSignIn);
 
-router.post('/sign-in', cors(corsOptions), userController.handleSignIn);
+router.get('/hot-products', productsController.displayHotProducts);
 
-router.get('/hot-products', cors(corsOptions), homepageController.displayHotProducts);
-
-router.get('/newest-products', cors(corsOptions), homepageController.displayNewestProducts);
+router.get('/newest-products', productsController.displayNewestProducts);
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const userService = require('../services/userService');
+const userService = require('./userService');
 
 exports.handleSignIn = async (req, res, next) => {
     const obj = await userService.checkSignInInfo(req, res, next);

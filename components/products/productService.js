@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Paginator = require('paginator');
 
-const productModel = require('../models/productModel');
+const productModel = require('./product');
 
 const PER_PAGE = 12;//Limit
 const LENGTH = 5;

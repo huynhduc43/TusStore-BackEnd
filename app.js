@@ -13,9 +13,9 @@ const corsOptions = {
 }
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const productsRouter = require('./routes/products');
-const cartRouter = require('./routes/cart');
+const usersRouter = require('./components/users/index');
+const productsRouter = require('./components/products/index');
+const cartRouter = require('./components/cart/index');
 
 var app = express();
 
@@ -23,15 +23,15 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-db();
-
+app.use(cors(corsOptions));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.options('*', cors(corsOptions));
+//app.options('*', cors(corsOptions));
+db();
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

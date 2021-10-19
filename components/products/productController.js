@@ -1,6 +1,6 @@
-const productService = require('../services/productService');
-const productModel = require('../models/productModel');
-const commentModel = require('../models/commentModel');
+const productService = require('./productService');
+const productModel = require('./product');
+const commentModel = require('../comments/comment');
 
 exports.displayCactusList = async (req, res, next) => {
     const page = req.query.page == undefined ? 1 : parseInt(req.query.page);
@@ -148,4 +148,32 @@ exports.viewProductDetail = async (req, res, next) => {
     //Get comment
     const comments = await commentModel.find({productId: req.params.id});
     res.send(product);
+}
+
+exports.displayNewestProducts = async (req, res, next) => {
+    //Top 4 san pham duoc them gan day nhat
+    const newestProducts = await productModel.find({
+        path: {
+            $in: [
+                /,Cactus,/,
+                /,StoneLotus,/
+            ]
+        }
+    }).sort({ addDate: 'desc' }).limit(4);
+
+    res.send(newestProducts);
+}
+
+exports.displayHotProducts = async (req, res, next) => {
+    //Top 8 san pham ban duoc nhieu nhat
+    const hotProducts = await productModel.find({
+        path: {
+            $in: [
+                /,Cactus,/,
+                /,StoneLotus,/
+            ]
+        }
+    }).sort({ sold: 'desc' }).limit(8);
+
+    res.send(hotProducts);
 }

@@ -1,4 +1,4 @@
-const userModel = require("../models/userModel");
+ const userModel = require('../users/user');
 
 exports.getCart = async (req, res, next) => {
 

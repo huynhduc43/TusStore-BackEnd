@@ -3,7 +3,7 @@ const validator = require("email-validator");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-const userModel = require('../models/userModel');
+const userModel = require('./user');
 
 exports.checkSignInInfo = async (req, res, next) => {
     const user = await userModel.findOne({ email: req.body.email }).exec();

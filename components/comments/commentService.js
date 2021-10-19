@@ -2,8 +2,8 @@ const Paginator = require('paginator');
 const mongoose = require('mongoose');
 mongoose.set('useFindAndModify', false);
 
-const commentModel = require('../models/commentModel');
-const userModel = require('../models/userModel');
+const commentModel = require('./comment');
+const userModel = require('../users/user');
 
 const PER_PAGE = 5;//Limit
 const LENGTH = 5;
@@ -16,7 +16,7 @@ exports.postComment = async (body) => {
         name: body.name,
         content: body.content,
         postDate: body.postDate,
-    }
+    } 
 
     const newComment = commentModel(data);
     const cmt = await newComment.save();
