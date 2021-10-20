@@ -19,4 +19,9 @@ router.get('/hot-products', productsController.displayHotProducts);
 
 router.get('/newest-products', productsController.displayNewestProducts);
 
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'TusStoreAPI' });
+});
+ 
 module.exports = router;

@@ -1,13 +1,8 @@
 require('dotenv').config();
 
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 mongoose.set('useCreateIndex', true);
-var chalk = require('chalk');
-var dbURL = process.env.DB;
-var connected = chalk.bold.cyan;
-var error = chalk.bold.yellow;
-var disconnected = chalk.bold.red;
-var termination = chalk.bold.magenta;
+const dbURL = process.env.DB;
 
 module.exports = function(){
   mongoose.connect(dbURL, { 
@@ -17,20 +12,20 @@ module.exports = function(){
   });
 
   mongoose.connection.on('connected', function(){
-    console.log(connected("Mongoose default connection is open to ", dbURL));
+    console.log("Mongoose default connection is open to ", dbURL);
   });
 
   mongoose.connection.on('error', function(err){
-    console.log(error("Mongoose default connection has occured "+err+" error"));
+    console.log("Mongoose default connection has occured "+err+" error");
   });
 
   mongoose.connection.on('disconnected', function(){
-    console.log(disconnected("Mongoose default connection is disconnected"));
+    console.log("Mongoose default connection is disconnected");
   });
 
   process.on('SIGINT', function(){
     mongoose.connection.close(function(){
-      console.log(termination("Mongoose default connection is disconnected due to application termination"));
+      console.log("Mongoose default connection is disconnected due to application termination");
       process.exit(0)
     });
   });

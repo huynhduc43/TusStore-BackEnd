@@ -5,7 +5,7 @@ const commentModel = require('../comments/comment');
 exports.displayCactusList = async (req, res, next) => {
     const page = req.query.page == undefined ? 1 : parseInt(req.query.page);
     const sort = req.query.sort === undefined ? 'newst' : req.query.sort;
-    const filter = await productService.handleQuery({...req.query});
+    const filter = await productService.handleQuery({ ...req.query });
     let paginationInfo = {};
     let productList;
 
@@ -33,7 +33,7 @@ exports.displayCactusList = async (req, res, next) => {
     }
 
     res.send({
-        productList: productList, 
+        productList: productList,
         paginationInfo: paginationInfo,
     });
 }
@@ -41,12 +41,12 @@ exports.displayCactusList = async (req, res, next) => {
 exports.displayAllCactus = async (req, res, next) => {
     const page = req.query.page === undefined ? 1 : parseInt(req.query.page);
     const sort = req.query.sort === undefined ? 'newst' : req.query.sort;
-    const filter = await productService.handleQuery({...req.query});
-    const paginationInfo =  await productService.handlePagination(/,Cactus,/, page, filter);
+    const filter = await productService.handleQuery({ ...req.query });
+    const paginationInfo = await productService.handlePagination(/,Cactus,/, page, filter);
     const productList = await productService.getProductList(/,Cactus,/, page, filter, sort);
 
     res.send({
-        productList: productList, 
+        productList: productList,
         paginationInfo: paginationInfo,
     });
 }
@@ -80,7 +80,7 @@ exports.displayStoneLotusList = async (req, res, next) => {
     }
 
     res.send({
-        productList: productList, 
+        productList: productList,
         paginationInfo: paginationInfo,
     });
 }
@@ -91,7 +91,7 @@ exports.displayAllStoneLotus = async (req, res, next) => {
     const productList = await productService.getProductList(/,StoneLotus,/, page);
 
     res.send({
-        productList: productList, 
+        productList: productList,
         paginationInfo: paginationInfo,
     });
 }
@@ -117,7 +117,7 @@ exports.displayPotsList = async (req, res, next) => {
     }
 
     res.send({
-        productList: productList, 
+        productList: productList,
         paginationInfo: paginationInfo,
     });
 }
@@ -128,25 +128,23 @@ exports.displayAllPots = async (req, res, next) => {
     const paginationInfo = await productService.handlePagination(/,Pots,/, page);
 
     res.send({
-        productList: productList, 
+        productList: productList,
         paginationInfo: paginationInfo,
     });
 }
 
-exports.displayNewestProduct = async(req, res, next) => {
+exports.displayNewestProduct = async (req, res, next) => {
     const product = await productService.getProductList(null, 4);
     res.send(product);
 }
 
-exports.displayHotProducts = async(req, res, next) => {
+exports.displayHotProducts = async (req, res, next) => {
     const product = await productService.getProductList(null, 8);
     res.send(product);
 }
 
 exports.viewProductDetail = async (req, res, next) => {
     const product = await productModel.findById(req.params.id);
-    //Get comment
-    const comments = await commentModel.find({productId: req.params.id});
     res.send(product);
 }
 

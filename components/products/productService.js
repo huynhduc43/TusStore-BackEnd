@@ -31,7 +31,7 @@ exports.getProductList = async (query, page, filter, sort) => {
     if (filter === undefined) {
         queryObj = { path: query };
     } else {
-        queryObj =  {
+        queryObj = {
             path: query,
             filter: filter,
         }
